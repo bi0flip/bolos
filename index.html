@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Gilberto Pacheco Gallegos.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Inicio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Compatibilidad para exploradores de Windows -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" sizes="48x48" href="img/ic_launcher_48px.png" >
+    <!-- Color de la barra de navegación de Chrome. -->
+    <meta name="theme-color" content="#03a9f4">
+    <!-- Color de la barra de navegación de Explorer y Edge. -->
+    <meta name="msapplication-TileColor" content="#03a9f4">
+
+    <!-- Configuración para el ícono de acceso directo en Chrome. -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--<link rel="manifest" href="manifest.json">-->
+    <link rel="icon" sizes="192x192" href="img/ic_launcher_192px.png">
+
+    <!-- Configuración para el ícono de acceso directo en Safari. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Bowling AMF">
+    <link rel="apple-touch-icon" sizes="144x144"
+          href="img/ic_launcher_144px.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="img/ic_launcher_144px.png">
+
+    <!-- Configuración para el ícono de acceso directo en Win8
+    (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="img/ic_launcher_144px.png">
+
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/libs/webcomponents.min.js"></script>
+    <script src="js/libs/util.js"></script>
+    <script src="js/libs/MedWeb.js"></script>
+
+    <script src="js/BdHelper.js"></script>
+    <script src="js/CtrlAvisos.js"></script>
+    <script src="js/InfoAviso.js"></script>
+    <script src="js/Sincronizacion.js"></script>
+
+    <link rel="import" href="bowl/form-sesion.html">
+    <link rel="import" href="bowl/torneo-footer.html">
+  </head>
+  <body>
+    <h1 id="titulo">Inicio</h1>
+    <div class="contenido">
+      <div>
+        <aside>
+          <nav>
+            <form is="form-sesion"></form>
+          </nav>
+        </aside>
+        <main role="main"></main>
+      </div>
+    </div>
+  <torneo-footer></torneo-footer>
+  <script src="js/torneo.js"></script>
+  <script src="js/MedNotificacion.js"></script>
+  <script>
+    new MedNotificacion().inicia();
+  </script>
+</body>
+</html>

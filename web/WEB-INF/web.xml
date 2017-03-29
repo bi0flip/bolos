@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>net.leaal.servlets.torneo.CtrlInicio</listener-class>
+    </listener>
+    <session-config>
+        <session-timeout>0</session-timeout>
+    </session-config>
+    <mime-mapping>
+        <extension>json</extension>
+        <mime-type>application/manifest+json</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>manifest</extension>
+        <mime-type>text/cache-manifest</mime-type>
+    </mime-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <security-constraint>
+        <display-name>Administración</display-name>
+        <web-resource-collection>
+            <web-resource-name>Páginas de Administración</web-resource-name>
+            <description>Administración del sitio.</description>
+            <url-pattern>/ctrlCategorias</url-pattern>
+            <url-pattern>/ctrlClientes</url-pattern>
+            <url-pattern>/ctrlProductos</url-pattern>
+            <url-pattern>/ctrlUsuarios</url-pattern>
+            <url-pattern>/formReporte.html</url-pattern>
+            <url-pattern>/ctrlReporte</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Solo los administradores tienen acceso.</description>
+            <role-name>Administrador</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Torneos</display-name>
+        <web-resource-collection>
+            <web-resource-name>Torneos</web-resource-name>
+            <description>Páginas para revisar torneos.</description>
+            <url-pattern>/ctrlCarrito</url-pattern>
+            <url-pattern>/ctrlProductosCliente</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Solo los jugadores pueden entrar.</description>
+            <role-name>Jugador</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <!--  <security-constraint>
+    <display-name>Todo Encriptado (Solo con certificados https)</display-name>
+    <web-resource-collection>
+      <web-resource-name>Todas las url</web-resource-name>
+      <description>Representa a todas las url</description>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <description>Encriptado</description>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>-->
+    <security-role>
+        <description>Administra el sistema.</description>
+        <role-name>Administrador</role-name>
+    </security-role>
+    <security-role>
+        <description>Revisar torneos.</description>
+        <role-name>Jugador</role-name>
+    </security-role>
+</web-app>

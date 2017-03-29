@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Categorías</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="rmpt/rmpt-panel-maestro.html">
+    <link rel="import" href="rmpt/rmpt-herramientas-detalle.html">
+    <link rel="import" href="rmpt/rmpt-campo.html">
+    <link rel="import" href="rmpt/rmpt-indica-campos-obligatorios.html">
+    <link rel="import" href="rmpt/rmpt-selecciona-muchos.html">
+  </head>
+  <body>
+    <template>
+      <rmpt-panel-maestro id="maestro"></rmpt-panel-maestro>
+      <div id="detalle" data-interruptor="muestraDetalle">
+        <rmpt-herramientas-detalle data-confirmacion="Confirma eliminar este usuario.">
+        </rmpt-herramientas-detalle>
+        <input type="hidden" name="debeConfirmar" value="true">
+        <p id="id" is="rmpt-campo" data-label="Identificador/e-Mail" data-accesskey="I"
+           data-ayuda="De 5 a 16 caracteres">
+            <input type="text" maxlength="25">
+        </p>
+        <p id="contrasena" is="rmpt-campo"
+           data-label="Contraseña" data-accesskey="O"
+           data-ayuda="5 a 25 caracteres">
+          <input type="password" maxlength="25">
+        </p>
+        <p id="confirma" is="rmpt-campo"
+           data-label="Confirma la Contraseña" data-accesskey="F"
+           data-ayuda="Debe coincidir con la contraseña">
+          <input type="password" maxlength="25">
+        </p>
+        <p id="nombre" is="rmpt-campo" data-label="Nombre" data-accesskey="N">
+          <input type="text">
+        </p>
+        <fieldset id="roles" is="rmpt-selecciona-muchos"
+                  data-legend="Roles" data-accesskey="R">
+        </fieldset>
+        <rmpt-indica-campos-obligatorios></rmpt-indica-campos-obligatorios>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          cargaTemplate(this, template);
+          new MedWeb(this, "ctrlUsuarios").inicia();
+        };
+        registraElement("form-usuarios",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

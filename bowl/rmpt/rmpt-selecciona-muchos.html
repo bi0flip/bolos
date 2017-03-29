@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Campo para Selección Múltiple</title>
+    <style>
+      [is='rmpt-selecciona-muchos'] label {display: block}
+      [is='rmpt-selecciona-muchos'] .vacio {
+        font-size: 0.8em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <template>
+      <legend></legend>
+      <div class="ayuda"></div>
+      <div class="error"></div>
+      <div class="lista"></div>
+      <div class="vacio">No hay opciones registradas.</div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var template = elementPrevio();
+        var prototipo = Object.create(HTMLFieldSetElement.prototype, {
+          value: {
+            /** Devuelve los valores seleccionados.
+             * @returns {Array<string>} */
+            get: function () {
+              return Array.prototype.map.call(
+                  this._lista.querySelectorAll(":checked"),
+                  function (check) {
+                    return check.value;
+                  });
+            },
+            set: function (v) {
+              v = v || [];
+              var checks = this.checks;
+              for (var i = 0, length = checks.length; i < length; i++) {
+                var check = checks[i];
+                check.checked = v.indexOf(check.value) >= 0;
+              }
+            }
+          },
+          opciones: {
+            enumerable: true,
+            get: function () {
+              return this.checks;
+            },
+            set: function (_opciones) {
+              var value = this.value;
+              borraTodosLosElementos(this._lista);
+              this.checks = [];
+              if (_opciones && _opciones.length > 0) {
+                this._vacio.style.display = "none";
+                for (var i = 0, length = _opciones.length; i < length; i++) {
+                  var opcion = _opciones[i];
+                  var label = document.createElement("label");
+                  var check = document.createElement("input");
+                  check.name = this.id;
+                  check.type = "checkbox";
+                  check.value = opcion.id;
+                  check.checked = value.indexOf(check.value) >= 0;
+                  label.appendChild(check);
+                  label.appendChild(document.createTextNode(opcion.texto));
+                  this._lista.appendChild(label);
+                  this.checks.push(check);
+                }
+              } else {
+                this._vacio.style.display = "block";
+              }
+            }
+          }
+        });
+        prototipo.createdCallback = function () {
+          this.classList.add("campo");
+          cargaTemplate(this, template);
+          this.checks = [];
+          Object.defineProperties(this, {
+            _lista: {
+              enumerable: true,
+              value: this.querySelector(".lista")
+            },
+            _legend: {
+              enumerable: true,
+              value: this.querySelector("legend")
+            },
+            _vacio: {
+              enumerable: true,
+              value: this.querySelector(".vacio")
+            },
+            _ayuda: {
+              enumerable: true,
+              value: this.querySelector(".ayuda")
+            },
+            _error: {
+              enumerable: true,
+              value: this.querySelector(".error")
+            }
+          });
+          iniciaAtributos(this);
+        };
+        prototipo.attributeChangedCallback = function (nombre, valAnt, valor) {
+          switch (nombre) {
+            case "data-legend":
+              if (this._legend) {
+                this._legend.textContent = valor;
+              }
+              break;
+            case "data-vacio":
+              if (this._vacio) {
+                this._vacio.textContent = valor;
+              }
+              break;
+            case "data-ayuda":
+              if (this._ayuda) {
+                this._ayuda.textContent = valor;
+              }
+              break;
+            case "data-error":
+              if (this._error) {
+                this._error.textContent = valor;
+              }
+              break;
+          }
+        };
+        registraElement("rmpt-selecciona-muchos",
+            {extends: "fieldset", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

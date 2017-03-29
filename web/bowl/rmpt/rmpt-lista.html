@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Lista de renglones.</title>
+    <link rel="import" href="rmpt-renglon.html">
+    <link rel="import" href="rmpt-renglon-vacio.html">
+  </head>
+  <body>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLElement.prototype, {
+          value: {
+            set: function (lista) {
+              lista = lista || [];
+              borraTodosLosElementos(this);
+              if (lista.length === 0) {
+                this.appendChild(document.createElement("rmpt-renglon-vacio"));
+              } else {
+                for (var i = 0, length = lista.length; i < length;
+                    i++) {
+                  var renglon = lista[i];
+                  var element = document.createElement("rmpt-renglon");
+                  this.appendChild(element);
+                  if (renglon.imagenUrl) {
+                    element.img.src = renglon.imagenUrl;
+                    element.a.addEventListener("click",
+                        this.disparaAccion.bind(this, renglon.detalleId));
+                  } else {
+                    element.img.style.display = "none";
+                    element.a.style.display = "none";
+                  }
+                  if (renglon.texto1) {
+                    element.texto1.textContent = texto(renglon.texto1);
+                    if (renglon.detalleId) {
+                      element.texto1.addEventListener("click",
+                          this.disparaAccion.bind(this, renglon.detalleId));
+                    }
+                  } else {
+                    element.texto1.style.display = "none";
+                  }
+                  if (renglon.texto2) {
+                    element.texto2.textContent = texto(renglon.texto2);
+                  } else {
+                    element.texto2.style.display = "none";
+                  }
+                }
+              }
+            }
+          }
+        });
+        prototipo.disparaAccion = function (detalleId) {
+          this.dispatchEvent(
+              new CustomEvent("accion", {
+                detail: {accion: "detalle", detalleId: detalleId},
+                bubbles: true
+              }));
+        };
+        registraElement("rmpt-lista", {prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

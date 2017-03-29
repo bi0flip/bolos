@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Equipos</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="rmpt/rmpt-panel-maestro.html">
+    <link rel="import" href="rmpt/rmpt-herramientas-detalle.html">
+    <link rel="import" href="rmpt/rmpt-campo.html">
+    <link rel="import" href="rmpt/rmpt-selecciona-uno.html">
+    <link rel="import" href="rmpt/rmpt-selecciona-imagen.html">
+    <link rel="import" href="rmpt/rmpt-indica-campos-obligatorios.html">
+  </head>
+  <body>
+    <template>
+      <rmpt-panel-maestro id="maestro"></rmpt-panel-maestro>
+      <div id="detalle" data-interruptor="muestraDetalle">
+        <rmpt-herramientas-detalle data-confirmacion="Confirma eliminar este equipo.">
+        </rmpt-herramientas-detalle>
+        <div class="columnas">
+          <div class="imagen crece">
+            <img id="img" alt="Falta seleccionar imagen"/>
+          </div>
+          <div>
+            <p id="imagen" is="rmpt-selecciona-imagen"
+               data-label="Imagen Equipo" data-accesskey="I"
+               data-selector="Seleccionar..." data-img="img"></p>
+            <p id="nombre" is="rmpt-campo"
+               data-label="Nombre Equipo" data-accesskey="N">
+              <input type="text">
+            </p>
+            <p id="usuario" is="rmpt-selecciona-uno"
+               data-label="Entrenador" data-accesskey="R"></p>
+            
+            <rmpt-indica-campos-obligatorios></rmpt-indica-campos-obligatorios>
+          </div>
+        </div>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          this.method = "GET";
+          this.enctype="multipart/form-data";
+          cargaTemplate(this, template);
+          new MedWeb(this, "ctrlEquipos").inicia();
+        };
+        registraElement("form-equipos",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

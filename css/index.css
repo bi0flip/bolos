@@ -1,0 +1,137 @@
+/*
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+/* 
+    Created on : 5/01/2017, 08:46:22 AM
+    Author     : Soluciones LEAAL
+*/
+/*
+Colores Primarios --  Light red #e57373
+#ffffff               -- texto negro
+#b3e5fc
+#81d4fa
+#4fc3f7
+#29b6f6
+#e57373 -- color base
+#039be5               -- texto blanco
+#0288d1
+#0277bd
+#01579b
+
+Colores secundarios -- Orange
+#ffd180               -- texto negro
+#ffab40
+#ff9100
+#ff6d00
+*/
+@CHARSET "UTF-8";
+body {
+  /* background-color: #d32f2f; */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+h1#titulo {
+  background-color: #ffebee;
+  color:#9a9797;
+  margin: 0;
+  padding: 0.5em 0;
+  text-align: center;
+}
+body > .contenido {
+  background-color: white;
+  display: flex;
+  flex-direction: column
+}
+body > .contenido > div {
+  margin: 0 auto;
+  display: flex;
+}
+body > .contenido > div > aside > nav {
+  padding: 1em;
+  background-color: white;
+}
+@media screen and (max-width: 839px) {
+  body > .contenido > div > aside {background-color: #ffebee}
+  body > .contenido > div > aside:before {
+    content: "";
+    color: black;
+    display: block;
+    width: 1em;
+    margin: 1em;
+    height: 0.125em;
+    border-top: 0.375em double black;
+    border-bottom: 0.125em solid black;
+  }
+  body > .contenido > div > aside > nav {display: none}
+  body > .contenido > div > aside:hover > nav {display: block}
+}
+main {margin: 0 1em}
+legend {color: #900a0a}
+*:focus {
+  outline-color: black;
+  outline-style: dashed;
+  outline-width: thin
+}
+a {color: #a70b11}
+.herramientas {
+  margin: 0.5em 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center
+}
+.selector, select, input[type="button"], input[type="submit"] {
+  display: inline-block;
+  text-align: center;
+  color: #900a0a;
+  background-color: #ffebee;
+  margin: 0 0.2em;
+  padding: 0.5em 1em;
+  border: none;
+  font-weight: bold;
+}
+input[type="file"] {
+  position: absolute;
+  top: -300em
+}
+.selector:active, select:active, input[type="button"]:active,
+input[type="submit"]:active {
+  background-color: #ff8a80
+}
+input[type="button"].principal, input[type="submit"].principal {
+  background-color: #FFDDB5
+}
+.imagen {text-align: center}
+.imagen img {max-width: 100%}
+.campo > label > .valor, .campo > .ayuda, .campo > .error {
+  display: block
+}
+.campo > label > .texto, .campo > label > .obligatorio {
+  display: inline;
+  color: #a70b11
+}
+.ayuda {font-size: 0.8em}
+.error {color: red}
+.columnas {
+  display: flex;
+  flex-wrap: wrap
+}
+.columnas > * {margin: 1em}
+.columnas > .crece {flex: 1}
+@media screen and (max-width: 479px) {
+  .columnas {flex-direction: column}
+}

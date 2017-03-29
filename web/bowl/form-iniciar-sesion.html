@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Categorías</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="rmpt/rmpt-campo.html">
+    <link rel="import" href="rmpt/rmpt-indica-campos-obligatorios.html">
+  </head>
+  <body>
+    <template>
+      <div class="columnas">
+        <div class="imagen crece">
+          <img alt="Boliche" src="img/shopping-basket-full256.png"/>
+        </div>
+        <div>
+          <p is="rmpt-campo" data-label="Identificador" data-accesskey="I">
+            <input type="text" name="id" autofocus="autofocus"/>            
+          </p>
+          <p is="rmpt-campo" data-label="Contraseña" data-accesskey="O">
+            <input type="password" name="contrasena"/>
+          </p>
+          <p is="rmpt-indica-campos-obligatorios"></p>
+          <p class="botones">
+            <input type="button" value="Cancelar"  accesskey="C"
+                   onclick="location.hash = '#torneo-inicio'">
+            <input type="submit" value="Iniciar Sesión" accesskey="S"
+                   class="principal">
+          </p>
+        </div>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          cargaTemplate(this, template);
+          var medWeb = new MedWeb(this, "ctrlIniciarSesion");
+          medWeb.formActualizada = function (modeloForm) {
+            if (modeloForm.siguienteForm) {
+              location.reload();
+            }
+          };
+          medWeb.inicia();
+        };
+        registraElement("form-iniciar-sesion",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Categorías</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="rmpt/rmpt-lista.html">
+    <link rel="import" href="rmpt/rmpt-campo.html">
+    <link rel="import" href="rmpt/rmpt-campo-texto.html">
+  </head>
+  <body>
+    <template>
+      <input type="hidden" name="nuevo">
+      <input type="hidden" name="muestraDetalle">
+      <input type="hidden" name="detalleId">
+      <div id="maestro" data-interruptor-invertido="muestraDetalle">
+        <main role="main">
+          <div class="herramientas">
+            <input type="button" value="Guardar" accesskey="G"
+                   data-accion="action_guardar_venta">
+            <input type="button" value="Pagar" accesskey="P"
+                   data-accion="action_pagar" class="principal">
+          </div>
+          <p id="total" is="rmpt-campo-texto" data-label="Total"></p>
+          <p id="fechaHoraDeEntrega" is="rmpt-campo"
+             data-label="Fecha y Hora de Entrega" data-accesskey="F"
+             data-obligatorio="false">
+            <input type="datetime-local" placeholder="aaaa-mm-ddThh:mm">
+          </p>
+          <p id="direccionDeEntrega" is="rmpt-campo"
+             data-label="Dirección de Entrega" data-accesskey="D"
+             data-obligatorio="false">
+            <textarea rows="4"></textarea>
+          </p>
+          <rmpt-lista id="lista"></rmpt-lista>
+        </main>
+      </div>
+      <div id="detalle" data-interruptor="muestraDetalle">
+        <rmpt-herramientas-detalle data-confirmacion="Confirma cancelar este producto.">
+        </rmpt-herramientas-detalle>
+        <div class="columnas">
+          <div class="imagen crece">
+            <img id="img" alt="Producto">
+          </div>
+          <div>
+            <p id="nombre" is="rmpt-campo-texto" data-label="Nombre"></p>
+            <p id="categoria" is="rmpt-campo-texto" data-label="Categoría"></p>
+            <p id="precio" is="rmpt-campo-texto" data-label="Precio (MN)"></p>
+            <p id="cantidad" is="rmpt-campo"
+               data-label="Cantidad" data-accesskey="A">
+              <input type="number">
+            </p>
+          </div>
+        </div>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          cargaTemplate(this, template);
+          new MedWeb(this, "ctrlCarrito").inicia();
+        };
+        registraElement("form-carrito",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

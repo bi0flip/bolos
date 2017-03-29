@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Página de inicio</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <template>
+      <p class="imagen">
+        <img alt="Torneo" src="img/shopping-basket-full256.png">
+      </p>
+      <div class="columnas">
+        <div class="crece">
+          <p>Aquí debe ir lo principal de tu página.</p>
+        </div>
+        <aside>
+          <nav>
+            <h1>Enlaces</h1>
+            <!--ul>
+              <li><a href="http://ramptors.net">Ramptors</a></li>
+              <li><a href="http://java.com">Java</a></li>
+              <li>
+                <a href="http://java.oracle.com">Java (Desarrolladores)</a>
+              </li>
+            </ul-->
+          </nav>
+        </aside>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var template = elementPrevio();
+        var prototipo = Object.create(HTMLElement.prototype);
+        prototipo.createdCallback = function () {
+          this.style.display = "block";
+          cargaTemplate(this, template);
+        };
+        registraElement("torneo-inicio", {prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

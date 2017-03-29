@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Barra de Herramientas para las Vistas de Detalle.</title>
+  </head>
+  <body>
+    <template>
+      <input type="button" value="Cancelar" accesskey="C"
+             data-accion="action_cancelar">
+      <input id="eliminar" type="button" value="Eliminar" accesskey="E"
+             data-interruptor-invertido="nuevo">
+      <input type="submit" value="Guardar" accesskey="G" class="principal">
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var template = elementPrevio();
+        var prototipo = Object.create(HTMLElement.prototype);
+        prototipo.createdCallback = function () {
+          this.classList.add("herramientas");
+          cargaTemplate(this, template);
+          if (!this.dataset.aviso) {
+            this.dataset.aviso = "\nNo podrás recuperar los datos.";
+          }
+          this.querySelector("#eliminar").
+              addEventListener("click", this.clicEnEliminar.bind(this));
+        };
+        prototipo.clicEnEliminar = function () {
+          if (confirm(this.dataset.confirmacion + this.dataset.aviso)) {
+            this.dispatchEvent(new CustomEvent("accion", {
+              detail: {accion: "action_eliminar"},
+              bubbles: true
+            }));
+          }
+        };
+        registraElement("rmpt-herramientas-detalle", {prototype: prototipo
+        });
+      })();
+    </script>
+  </body>
+</html>

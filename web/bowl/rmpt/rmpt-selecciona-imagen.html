@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Campo para Selección Única</title>
+  </head>
+  <body>
+    <template>
+      <label>
+        <span class="texto"></span>
+        <span class="obligatorio">*</span>
+        <span class="selector"></span>
+        <input type="file">
+      </label>
+      <span class="ayuda"></span>
+      <span class="error"></span>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var template = elementPrevio();
+        var prototipo = Object.create(HTMLParagraphElement.prototype, {
+          value: {
+            enumerable: true,
+            get: function () {
+              return this.element.value;
+            },
+            set: function (_value) {
+              this.element.value = "";
+            }
+          },
+          opciones: {
+            enumerable: true,
+            get: function () {
+              return [];
+            },
+            set: function () {
+            }
+          }
+        });
+        prototipo.createdCallback = function () {
+          this.classList.add("campo");
+          cargaTemplate(this, template);
+          Object.defineProperties(this, {
+            element: {
+              enumerable: true,
+              value: this.querySelector("input")
+            },
+            _label: {
+              enumerable: true,
+              value: this.querySelector("label")
+            },
+            _texto: {
+              enumerable: true,
+              value: this.querySelector(".texto")
+            },
+            _obligatorio: {
+              enumerable: true,
+              value: this.querySelector(".obligatorio")
+            },
+            _selector: {
+              enumerable: true,
+              value: this.querySelector(".selector")
+            },
+            _ayuda: {
+              enumerable: true,
+              value: this.querySelector(".ayuda")
+            },
+            _error: {
+              enumerable: true,
+              value: this.querySelector(".error")
+            }
+          });
+          this._ayuda.style.display = "none";
+          this.element.
+              addEventListener("change", this.recuperaImagen.bind(this));
+          iniciaAtributos(this);
+          if (!this.dataset.obligatorio) {
+            this.dataset.obligatorio = "true";
+          }
+        };
+        prototipo.attributeChangedCallback = function (nombre, valAnt, valor) {
+          switch (nombre) {
+            case "id":
+              if (this.element) {
+                this.element.name = valor;
+              }
+              break;
+            case "data-img":
+              this.img = valor;
+              break;
+            case "data-label":
+              if (this._texto) {
+                this._texto.textContent = valor;
+              }
+              break;
+            case "data-accesskey":
+              if (this._label) {
+                this._label.accessKey = valor;
+              }
+              break;
+            case "data-obligatorio":
+              if (this._obligatorio) {
+                this._obligatorio.style.display
+                    = valor === "true" ? "inline" : "none";
+              }
+              break;
+            case "data-selector":
+              if (this._selector) {
+                this._selector.textContent = valor;
+                this._selector.style.display = valor ? "block" : "none";
+              }
+              break;
+            case "data-ayuda":
+              if (this._ayuda) {
+                this._ayuda.textContent = valor;
+                this._ayuda.style.display = valor ? "block" : "none";
+              }
+              break;
+            case "data-error":
+              if (this._error) {
+                this._error.textContent = valor;
+              }
+              break;
+          }
+        };
+        prototipo.recuperaImagen = function () {
+          if (this.element.files && this.element.files[0] && this.img) {
+            var reader = new FileReader();
+            reader.onload = this.imagenCargada.bind(this);
+            reader.readAsDataURL(this.element.files[0]);
+          }
+        };
+        prototipo.imagenCargada = function (event) {
+          var img = document.getElementById(this.img);
+          img.src = event.target.result;
+        };
+        registraElement("rmpt-selecciona-imagen",
+            {extends: "p", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

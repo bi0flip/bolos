@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Forma de Manejo de Sesión</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="torneo-inicio.html">
+    <link rel="import" href="form-iniciar-sesion.html">
+    <link rel="import" href="form-usuarios.html">
+    <link rel="import" href="form-jugadores.html">
+    <link rel="import" href="form-categorias.html">
+    <link rel="import" href="form-productos.html">
+    <link rel="import" href="form-productos-cliente.html">
+    <link rel="import" href="form-carrito.html">
+    <link rel="import" href="form-avisos.html">
+    <style>
+      [is="form-sesion"] li {
+        display: block;
+        margin: 1em
+      }
+    </style>
+  </head>
+  <body>
+    <template>
+      <input type="hidden" name="sesionIniciada">
+      <input type="hidden" name="rolAdministrador">
+      <input type="hidden" name="rolCliente">
+      <div id="formUsuarioId"></div>
+      <input type="button" value="Iniciar Sesión" accesskey="S"
+             onclick="location.hash = '#form-iniciar-sesion';"
+             data-interruptor-invertido="sesionIniciada">
+      <input type="button" value="Terminar Sesión" accesskey="T"
+             data-accion="terminarSesion" data-interruptor="sesionIniciada">
+      <h1>Navegación</h1>
+      <ul>
+        <li><a href="#torneo-inicio">Inicio</a></li>
+        <li data-interruptor="rolAdministrador">
+          <a href="#form-usuarios">Usuarios</a>
+        </li>
+        <li data-interruptor="rolAdministrador">
+          <a href="#form-jugadores">Jugadores</a>
+        </li>
+        <li data-interruptor="rolAdministrador">
+          <a href="#form-equipos">Equipos</a>
+        </li>
+        <li data-interruptor="rolAdministrador">
+          <a href="#form-partidos">Partidos</a>
+        </li>
+        <li data-interruptor="rolAdministrador">
+          <a href="#form-torneo">Torneos</a>
+        </li>
+        <!--li data-interruptor="rolAdministrador">
+          <a href="#form-productos">Productos</a>
+        </li-->
+        <!--li data-interruptor="rolAdministrador">
+          <a href="#form-categorias">Categorías</a>
+        </li-->
+        <!--li data-interruptor="rolAdministrador">
+          <a href="formReporte.html" target="reporte">
+            Ventas de Hoy
+          </a>
+        </li-->
+        <li data-interruptor="rolCliente">
+          <a href="#form-productos-cliente">
+            Catálogo de Productos
+          </a>
+        </li>
+        <li data-interruptor="rolCliente">
+          <a href="#form-carrito">Carrito de Compras</a>
+        </li>
+        <li>
+          <a href="#form-avisos">Avisos</a>
+        </li>
+      </ul>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          cargaTemplate(this, template);
+          var medWeb = new MedWeb(this, "ctrlSesion");
+          medWeb.formActualizada = function (modeloForm) {
+            if (modeloForm.siguienteForm) {
+              location.reload();
+            }
+          };
+          medWeb.inicia();
+        };
+        registraElement("form-sesion",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>

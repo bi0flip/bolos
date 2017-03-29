@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 Soluciones LEAAL.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Categorías</title>
+    <meta charset="UTF-8">
+    <link rel="import" href="rmpt/rmpt-panel-maestro.html">
+    <link rel="import" href="rmpt/rmpt-herramientas-detalle.html">
+    <link rel="import" href="rmpt/rmpt-campo.html">
+    <link rel="import" href="rmpt/rmpt-selecciona-uno.html">
+    <link rel="import" href="rmpt/rmpt-selecciona-imagen.html">
+    <link rel="import" href="rmpt/rmpt-indica-campos-obligatorios.html">
+  </head>
+  <body>
+    <template>
+      <rmpt-panel-maestro id="maestro"></rmpt-panel-maestro>
+      <div id="detalle" data-interruptor="muestraDetalle">
+        <rmpt-herramientas-detalle data-confirmacion="Confirma eliminar este producto.">
+        </rmpt-herramientas-detalle>
+        <div class="columnas">
+          <div class="imagen crece">
+            <img id="img" alt="Falta seleccionar imagen"/>
+          </div>
+          <div>
+            <p id="imagen" is="rmpt-selecciona-imagen"
+               data-label="Imagen" data-accesskey="I"
+               data-selector="Seleccionar..." data-img="img"></p>
+            <p id="nombre" is="rmpt-campo"
+               data-label="Nombre" data-accesskey="N">
+              <input type="text">
+            </p>
+            <p id="categoria" is="rmpt-selecciona-uno"
+               data-label="Categoría" data-accesskey="R"></p>
+            <p id="precio" is="rmpt-campo"
+               data-label="Precio" data-accesskey="P"
+               data-ayuda="(MN) 6 dígitos enteros y 2 decimales">
+              <input type="number" step="0.01">
+            </p>
+            <p id="existencias" is="rmpt-campo"
+               data-label="Existencias" data-accesskey="X">
+              <input type="number">
+            </p>
+            <rmpt-indica-campos-obligatorios></rmpt-indica-campos-obligatorios>
+          </div>
+        </div>
+      </div>
+    </template>
+    <script>
+      "use strict";
+      (function () {
+        var prototipo = Object.create(HTMLFormElement.prototype);
+        var template = elementPrevio();
+        prototipo.createdCallback = function () {
+          this.action = "javascript:;";
+          this.method = "POST";
+          this.enctype="multipart/form-data";
+          cargaTemplate(this, template);
+          new MedWeb(this, "ctrlProductos").inicia();
+        };
+        registraElement("form-productos",
+            {extends: "form", prototype: prototipo});
+      })();
+    </script>
+  </body>
+</html>
